@@ -18,8 +18,8 @@ export default function Home() {
   
   const getProviderOrSigner = async (needSigner = false) => {
     const provider = await web3ModalRef.current.connect(); // We need to acces the underlying object since web3modal is stored as a reference 
-    const web3Provider = new providers.web3Provider(provider); 
-
+    const web3Provider = new providers.Web3Provider(provider); 
+    
     // Throw an error if the user is not connected to the goerli network 
     const { chainId } = await web3Provider.getNetwork(); 
 
@@ -32,6 +32,7 @@ export default function Home() {
       const signer = web3Provider.getSigner(); 
       return signer
     }
+    console.log(web3Provider); 
     return web3Provider; 
   }
 
@@ -39,8 +40,8 @@ export default function Home() {
   const addAddresstoWhitelist = async () => {
     try {
       // parameter set to true since we need a signer
-      const signer = getProviderOrSigner(true); 
-      
+      const signer = await getProviderOrSigner(true); 
+
       // Creating a new instance of the contract with a signer 
       const whitelistContract = new Contract(
         WHITELIST_CONTRACT_ADDRESS, 
@@ -48,17 +49,19 @@ export default function Home() {
         signer
       ); 
 
+      console.log(whitelistContract); 
+
       // Calling the address to whitelist from the contract 
-      const tx = await whitelistContract.addAddresstoWhitelist(); 
-      setLoading(true); 
+      // const tx = await whitelistContract.addAddresstoWhitelist(); 
+      // setLoading(true); 
 
-      // Waiting for the transaction to get mined 
-      await tx.wait(); 
-      setLoading(false); 
+      // // Waiting for the transaction to get mined 
+      // await tx.wait(); 
+      // setLoading(false); 
 
-      // Get the updated number of addresses in the whitelist 
-      await getNumberOfWhitelisted(); 
-      setJoinedWhitelist(true); 
+      // // Get the updated number of addresses in the whitelist 
+      // await getNumberOfWhitelisted(); 
+      // setJoinedWhitelist(true); 
 
     } catch (err) {
       console.error(err); 
@@ -156,22 +159,22 @@ export default function Home() {
         }); 
         connectWallet(); 
       }
-    }, [walletConnected]); 
+    },[]); 
 
     return (
       <div>
 
         <Head>
-           <title>Whitelist Dapp</title>
+           <title>Steve's Whitelist Dapp</title>
            <meta name="description" content="Whitelist-Dapp"/>
            <link rel="icon" href="./favicon.io" />
         </Head>
 
         <div className={styles.main}>
-          <div>
-            <h1 className={styles.title}>Welcome to crypto devs!</h1>
+          <div className={styles.mainContainer1}>
+            <h1 className={styles.title}>Steve's NFT</h1>
             <div className={styles.description}>
-              Its an NFT collection for developers in Crypto.
+              This is an NFT collection for my NFT's. Join the whitelist to get notified once new NFTs are out!
             </div>
             <div className={styles.description}>
               {numberOfWhitelisted} have already joined the Whitelist
