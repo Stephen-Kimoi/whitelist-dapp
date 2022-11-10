@@ -32,12 +32,11 @@ export default function Home() {
       const signer = web3Provider.getSigner(); 
       return signer
     }
-    console.log(web3Provider); 
     return web3Provider; 
   }
 
   // Adding current connected wallet to the whitelist
-  const addAddresstoWhitelist = async () => {
+  const addAddressToWhitelist = async () => {
     try {
       // parameter set to true since we need a signer
       const signer = await getProviderOrSigner(true); 
@@ -45,23 +44,21 @@ export default function Home() {
       // Creating a new instance of the contract with a signer 
       const whitelistContract = new Contract(
         WHITELIST_CONTRACT_ADDRESS, 
-        abi.abi, 
+        abi, 
         signer
       ); 
 
-      console.log(whitelistContract); 
-
       // Calling the address to whitelist from the contract 
-      // const tx = await whitelistContract.addAddresstoWhitelist(); 
-      // setLoading(true); 
+      const tx = await whitelistContract.addAddressToWhiteList(); 
+      setLoading(true); 
 
-      // // Waiting for the transaction to get mined 
-      // await tx.wait(); 
-      // setLoading(false); 
+      // Waiting for the transaction to get mined 
+      await tx.wait(); 
+      setLoading(false); 
 
-      // // Get the updated number of addresses in the whitelist 
-      // await getNumberOfWhitelisted(); 
-      // setJoinedWhitelist(true); 
+      // Get the updated number of addresses in the whitelist 
+      await getNumberOfWhitelisted(); 
+      setJoinedWhitelist(true); 
 
     } catch (err) {
       console.error(err); 
@@ -76,7 +73,7 @@ export default function Home() {
 
         const whitelistContract = new Contract(
           WHITELIST_CONTRACT_ADDRESS, 
-          abi.abi, 
+          abi, 
           provider
         ); 
 
@@ -95,9 +92,11 @@ export default function Home() {
 
         const whitelistContract = new Contract(
           WHITELIST_CONTRACT_ADDRESS, 
-          abi.abi, 
+          abi, 
           signer
         ); 
+        
+        console.log(whitelistContract)
         
         // Get the address associated with signer connected in Metamask
         const address = await signer.getAddress(); 
@@ -135,7 +134,7 @@ export default function Home() {
           return <button className={styles.button}>Loading...</button>
         } else {
           return (
-            <button onClick={addAddresstoWhitelist} className={styles.button}>
+            <button onClick={addAddressToWhitelist} className={styles.button}>
                Join the Whitelist
             </button>
           ); 
