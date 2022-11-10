@@ -123,7 +123,7 @@ export default function Home() {
 
     // Returns the button based on the state of the dapp
     const renderButton = () => {
-      if (walletConnected) {
+      if (false) {
         if (joinedWhitelist) {
           return (
             <div className={styles.description}>
@@ -170,8 +170,10 @@ export default function Home() {
         </Head>
 
         <div className={styles.main}>
+
           <div className={styles.mainContainer1}>
             <h1 className={styles.title}>Steve's NFT</h1>
+            <img className={styles.image} src="./male_avatar.svg" /> 
             <div className={styles.description}>
               This is an NFT collection for my NFT's. Join the whitelist to get notified once new NFTs are out!
             </div>
@@ -180,14 +182,8 @@ export default function Home() {
             </div>
             {renderButton()}
           </div>
-          <div>
-            <img className={styles.image} src="./crypto-devs.svg" /> 
-          </div>
-        </div>
 
-        <footer className={styles.footer}>
-          Made with &#10084; by Crypto Devs
-        </footer>
+        </div>
 
       </div>
     )
