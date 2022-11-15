@@ -123,7 +123,7 @@ export default function Home() {
 
     // Returns the button based on the state of the dapp
     const renderButton = () => {
-      if (false) {
+      if (walletConnected) {
         if (joinedWhitelist) {
           return (
             <div className={styles.description}>
